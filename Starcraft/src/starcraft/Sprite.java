@@ -62,21 +62,21 @@ public abstract class Sprite {
 				return Orientation.W;
 		} else if (yDistance < 0) {
 			double slope = (double)yDistance / (double)xDistance;
-			if (slope <= -1)
+			if (slope <= -1)	//was -1
 				return Orientation.NNE;
 			else if (slope < 0)
 				return Orientation.ENE;
-			else if (slope < 1)
+			else if (slope < 1)	//was 1
 				return Orientation.WNW;
 			else
 				return Orientation.NNW;
 		} else {
 			double slope = (double)yDistance / (double)xDistance;
-			if (slope <= -1)
+			if (slope <= -1)	//was -1
 				return Orientation.SSW;
 			else if (slope < 0)
 				return Orientation.WSW;
-			else if (slope < 1)
+			else if (slope < 1)		//was 1
 				return Orientation.ESE;
 			else
 				return Orientation.SSE;

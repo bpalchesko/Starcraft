@@ -12,17 +12,15 @@ import javax.swing.JPanel;
 public class View extends JPanel {
 
 	Map map;
-	Marine marine1;
-	Marine marine2;
-	Marine marine3;
-	Marine marine4;
+	Cast cast;
 	
 	public View() {
 		map = new Map();
-		marine1 = new Marine(300, 180);
-		marine2 = new Marine(350, 160);
-		marine3 = new Marine(400, 140);
-		marine4 = new Marine(450, 120);
+		cast = new Cast();
+		cast.addHumanSprite(new Marine(300, 180));
+		cast.addHumanSprite(new Marine(350, 160));
+		cast.addHumanSprite(new Marine(400, 140));
+		cast.addHumanSprite(new Marine(450, 120));
 	}
 
 	static BufferedImage loadImage(String fileName) {
@@ -38,10 +36,13 @@ public class View extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		map.draw(g);
-		marine1.draw(g);
-		marine2.draw(g);
-		marine3.draw(g);
-		marine4.draw(g);
+		for(Sprite s: cast.spriteList) {
+			s.draw(g);
+		}
+//		marine1.draw(g);
+//		marine2.draw(g);
+//		marine3.draw(g);
+//		marine4.draw(g);
 	}
 
 }
