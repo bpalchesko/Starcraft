@@ -40,7 +40,9 @@ public class Starcraft extends JFrame {
 		addMouseListener(new MouseListener() {
 			
 			public void mouseClicked(MouseEvent e) {
-				tempStatus.setText(e.getX() + " " + e.getY());
+				
+				view.marine1.xDestination = e.getX() - view.marine1.spriteImage.getWidth()/2;
+				view.marine1.yDestination = e.getY() - view.marine1.spriteImage.getHeight();;
 			}
 			
 			public void mousePressed(MouseEvent e) {
@@ -78,6 +80,8 @@ public class Starcraft extends JFrame {
 		view.marine3.update();
 		view.marine4.update();
 		view.repaint();
+		tempStatus.setText((view.marine1.xDestination-view.marine1.xCurrent) + " " + (view.marine1.yDestination - view.marine1.yCurrent) +
+				" " + view.marine1.orientation);
 	}
 	
 	void addBottomBar() {

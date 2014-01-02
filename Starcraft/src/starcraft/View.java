@@ -2,6 +2,7 @@ package starcraft;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,8 +25,8 @@ public class View extends JPanel {
 		marine4 = new Marine(450, 120);
 	}
 
-	static Image loadImage(String fileName) {
-		Image img = null;
+	static BufferedImage loadImage(String fileName) {
+		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File("resources/" + fileName));
 		} catch (IOException exc) {

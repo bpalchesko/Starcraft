@@ -7,35 +7,31 @@ public class Marine extends Sprite {
 	
 	int frame;
 	int cycles;
-	Image marineImage;
-	Image[][] marineImages;
 	
 	public Marine(int x, int y) {
-		marineImages = new Image[12][13];
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 13; j++) {
-				marineImages[i][j] = View.loadImage("Marine" + i + "-" + j
-						+ ".gif");
-			}
-		}
-		marineImage = marineImages[0][0];
-		this.x = x;
-		this.y = y;
-		dy = 2;
-		dx = 1;
+		spriteImages = loadImages("Marine");
+		speed = 2;
+		orientation = Orientation.SSE;
+		spriteImage = spriteImages[orientation.imageGroup][4];
+		xCurrent = xDestination = x;
+		yCurrent = yDestination = y;
 		frame = 4;
 	}
 	
-	void walk() {
-		y += dy;
-		x += dx;
-		marineImage = marineImages[5][frame];
+	@Override
+	void move() {
+		orientation = selectOrientation();
+		spriteImage = spriteImages[orientation.imageGroup][frame];
+		setMovement();
+		yCurrent += dy;
+		xCurrent += dx;
 		if (frame < 12) frame++;
 		else frame = 4;
 	}
 	
+	@Override
 	void shoot() {
-		marineImage = marineImages[5][frame];
+		spriteImage = spriteImages[5][frame];
 		if (frame < 3) frame++;
 		else frame = 2;
 	}
@@ -43,22 +39,21 @@ public class Marine extends Sprite {
 	
 	@Override
 	void update() {
-		if(cycles > 175) marineImage = marineImages[5][4];
-		else if(cycles > 150) walk();
-		else if(cycles > 125) shoot();
-	    else if(cycles > 100) walk();
-		else if(cycles > 75) shoot();
-		else if(cycles > 50) walk();
-		else if(cycles > 25) shoot();
-		else walk();
-//		if(y>500) walk();
-//		else shoot();	
+		move();
+//		if(cycles > 175) spriteImage = spriteImages[5][4];
+//		else if(cycles > 150) move();
+//		else if(cycles > 125) shoot();
+//	    else if(cycles > 100) move();
+//		else if(cycles > 75) shoot();
+//		else if(cycles > 50) move();
+//		else if(cycles > 25) shoot();
+//		else move();	
 		cycles++;
 	}
 	
 	@Override
 	void draw(Graphics g) {
-		g.drawImage(marineImage, x, y, null);
+		g.drawImage(spriteImage, xCurrent, yCurrent, null);
 	}
 
 }
