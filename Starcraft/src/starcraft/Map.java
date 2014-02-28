@@ -8,9 +8,11 @@ public class Map {
 
 	Image backgroundImage;
 	
+	/**
+	 * Constructs a background by loading the background image.
+	 */
 	public Map() {
 		backgroundImage = View.loadImage("map.jpg");
-		System.out.println(backgroundImage);
 	}
 	
 	void draw(Graphics g) {

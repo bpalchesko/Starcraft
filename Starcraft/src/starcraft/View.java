@@ -1,7 +1,6 @@
 package starcraft;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +10,13 @@ import javax.swing.JPanel;
 
 public class View extends JPanel {
 
+	private static final long serialVersionUID = -1303141469178168350L;
 	Map map;
 	Cast cast;
 	
+	/**
+	 * Constructs view starting with a cast of 4 marines.
+	 */
 	public View() {
 		map = new Map();
 		cast = new Cast();
@@ -21,8 +24,15 @@ public class View extends JPanel {
 		cast.addHumanSprite(new Marine(350, 160));
 		cast.addHumanSprite(new Marine(400, 140));
 		cast.addHumanSprite(new Marine(450, 120));
+		//cast.addHumanSprite(new BattleCruiser(250, 120));
 	}
 
+	/**
+	 * Loads an image from 'resources'.
+	 * 
+	 * @param fileName
+	 * @return buffered image
+	 */
 	static BufferedImage loadImage(String fileName) {
 		BufferedImage img = null;
 		try {
@@ -39,10 +49,6 @@ public class View extends JPanel {
 		for(Sprite s: cast.spriteList) {
 			s.draw(g);
 		}
-//		marine1.draw(g);
-//		marine2.draw(g);
-//		marine3.draw(g);
-//		marine4.draw(g);
 	}
 
 }
