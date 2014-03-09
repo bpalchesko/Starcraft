@@ -235,6 +235,11 @@ public abstract class Sprite implements Comparable<Sprite> {
 		else move();
 	}
 	
+	/**
+	 * Sets whether sprite is in the side's current squad.
+	 * 
+	 * @param squad
+	 */
 	public void setInSquad(boolean squad) {
 		inSquad = squad;
 	}
@@ -264,7 +269,5 @@ public abstract class Sprite implements Comparable<Sprite> {
 		else result = 0;
 		return result;
 	}
-	
-
 
 }

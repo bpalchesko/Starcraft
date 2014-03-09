@@ -15,7 +15,7 @@ public class Cast {
 	ArrayList<Sprite> spriteList;
 	ArrayList<Sprite> humanSprites;
 	ArrayList<Sprite> humanSquad;
-	int[][] humanSquadBox;
+	int[][] humanSquadSelectionBox;
 	Random generator;
 	
 	/**
@@ -25,7 +25,7 @@ public class Cast {
 		spriteList = new ArrayList<Sprite>();
 		humanSprites = new ArrayList<Sprite>();
 		humanSquad = new ArrayList<Sprite>();
-		humanSquadBox = new int[2][2];
+		humanSquadSelectionBox = new int[2][2];
 	}
 	
 	/**
@@ -84,35 +84,27 @@ public class Cast {
 			}
 		}
 	}
-	
-//	void findSpriteDestination() {
-//		for (Sprite s: spriteList) {
-//			s.orientation = s.selectOrientation();
-//		}
-//	}
-	
-	public void selectHumanSquad(int clickedX, int clickedY, int draggedX, int draggedY) {
-		if (draggedX > clickedX) {
-			humanSquadBox[0][0] = clickedX;
-			humanSquadBox[1][0] = draggedX;
-		} else {
-			humanSquadBox[0][0] = draggedX;
-			humanSquadBox[1][0] = clickedX;
-		}
-		if (draggedY > clickedY) {
-			humanSquadBox[0][1] = clickedY;
-			humanSquadBox[1][1] = draggedY;
-		} else {
-			humanSquadBox[0][1] = draggedY;
-			humanSquadBox[1][1] = clickedY;
-		}
+
+	/**
+	 * Sets the group of human sprites within the given x-y bounds 
+	 * as the human squad.
+	 *  
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
+	public void setHumanSquad(int x1, int y1, int x2, int y2) {
+		humanSquadSelectionBox = PlayerMouseControls.updateSelectionBox(x1,y1,x2,y2);
 		for (Sprite s: humanSquad) {
 			s.setInSquad(false);
 		}
 		humanSquad = new ArrayList<Sprite>();
 		for (Sprite s : humanSprites) {
-			if (s.xCurrent >= humanSquadBox[0][0] && s.xCurrent <= humanSquadBox[1][0] &&
-				s.yCurrent >= humanSquadBox[0][1] && s.yCurrent <= humanSquadBox[1][1]) {
+			if (s.xCurrent >= humanSquadSelectionBox[0][0]
+					&& s.xCurrent <= humanSquadSelectionBox[1][0]
+					&& s.yCurrent >= humanSquadSelectionBox[0][1]
+					&& s.yCurrent <= humanSquadSelectionBox[1][1]) {
 				humanSquad.add(s);
 				s.setInSquad(true);
 			}

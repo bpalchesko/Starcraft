@@ -15,7 +15,7 @@ public class View extends JPanel {
 	Map map;
 	Cast cast;
 	PlayerMouseControls mouse;
-	int[][] selectionBoxCoordinates;
+	int[][] selectionBox;
 	boolean selecting;
 	
 	/**
@@ -28,8 +28,7 @@ public class View extends JPanel {
 		cast.addHumanSprite(new Marine(350, 160));
 		cast.addHumanSprite(new Marine(400, 140));
 		cast.addHumanSprite(new Marine(450, 120));
-		//cast.addHumanSprite(new BattleCruiser(250, 120));
-		selectionBoxCoordinates = new int[2][2];
+		selectionBox = new int[2][2];
 		selecting = false;
 	}
 
@@ -49,23 +48,24 @@ public class View extends JPanel {
 		return img;
 	}
 	
-	public void setSelectionBox(int clickedX, int clickedY, int draggedX, int draggedY) {
-		if(draggedX > clickedX) {
-			selectionBoxCoordinates[0][0] = clickedX;
-			selectionBoxCoordinates[1][0] = draggedX;
-		} else {
-			selectionBoxCoordinates[0][0] = draggedX;
-			selectionBoxCoordinates[1][0] = clickedX;
-		}
-		if (draggedY > clickedY) {
-			selectionBoxCoordinates[0][1] = clickedY;
-			selectionBoxCoordinates[1][1] = draggedY;
-		} else {
-			selectionBoxCoordinates[0][1] = draggedY;
-			selectionBoxCoordinates[1][1] = clickedY;
-		}
+	/**
+	 * Sets the selection box coordinates.
+	 * 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
+	public void setSelectionBox(int x1, int y1, int x2, int y2) {
+		selectionBox = PlayerMouseControls.updateSelectionBox(x1,y1,x2,y2);
 	}
 
+	/**
+	 * Sets whether the user is currently dragging the mouse,
+	 * creating a selection box.
+	 * 
+	 * @param selecting
+	 */
 	public void setSelecting(boolean selecting) {
 		this.selecting = selecting;
 	}
@@ -78,9 +78,9 @@ public class View extends JPanel {
 		}
 		if(selecting) {
 		g.setColor(Color.YELLOW);
-		g.drawRect(selectionBoxCoordinates[0][0], selectionBoxCoordinates[0][1], 
-				selectionBoxCoordinates[1][0] - selectionBoxCoordinates[0][0],
-				selectionBoxCoordinates[1][1] - selectionBoxCoordinates[0][1]);
+		g.drawRect(selectionBox[0][0], selectionBox[0][1], 
+				selectionBox[1][0] - selectionBox[0][0],
+				selectionBox[1][1] - selectionBox[0][1]);
 		}
 	}
 

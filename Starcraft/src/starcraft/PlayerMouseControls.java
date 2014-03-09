@@ -56,14 +56,13 @@ public class PlayerMouseControls extends MouseInputAdapter {
 					selectedCoordinates[DRAGGED][Y]);
 		}
 	}
-		
-	
+			
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			mousePressed = false;
 			view.setSelecting(mousePressed);
-			view.cast.selectHumanSquad(selectedCoordinates[CLICKED][X],
+			view.cast.setHumanSquad(selectedCoordinates[CLICKED][X],
 					selectedCoordinates[CLICKED][Y],
 					selectedCoordinates[DRAGGED][X],
 					selectedCoordinates[DRAGGED][Y]);
@@ -82,6 +81,40 @@ public class PlayerMouseControls extends MouseInputAdapter {
 		}
 	}
 	
+	/**
+	 * Returns an array of coordinates of the box selected by the user.
+	 * 
+	 * @param clickedX
+	 * @param clickedY
+	 * @param draggedX
+	 * @param draggedY
+	 * @return
+	 */
+	public static int[][] updateSelectionBox(int clickedX, int clickedY,
+			int draggedX, int draggedY) {
+		int[][] selectionBoxCoordinates = new int[2][2];
+		if (draggedX > clickedX) {
+			selectionBoxCoordinates[0][0] = clickedX;
+			selectionBoxCoordinates[1][0] = draggedX;
+		} else {
+			selectionBoxCoordinates[0][0] = draggedX;
+			selectionBoxCoordinates[1][0] = clickedX;
+		}
+		if (draggedY > clickedY) {
+			selectionBoxCoordinates[0][1] = clickedY;
+			selectionBoxCoordinates[1][1] = draggedY;
+		} else {
+			selectionBoxCoordinates[0][1] = draggedY;
+			selectionBoxCoordinates[1][1] = clickedY;
+		}
+		return selectionBoxCoordinates;
+	}
+	
+	/**
+	 * Returns whether the left mouse button is currently pressed.
+	 * 
+	 * @return
+	 */
 	public boolean getPressed() {
 		return mousePressed;
 	}
