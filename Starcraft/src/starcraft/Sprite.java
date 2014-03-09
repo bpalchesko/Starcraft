@@ -1,5 +1,6 @@
 package starcraft;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -18,6 +19,7 @@ public abstract class Sprite implements Comparable<Sprite> {
 	int speed;
 	int frame;
 	boolean shooting;
+	boolean inSquad;
 	int dx;
 	int dy;
 	final int STANDING_FRAME;
@@ -44,6 +46,7 @@ public abstract class Sprite implements Comparable<Sprite> {
 		frame = STANDING_FRAME;
 		spriteImages = loadImages(spriteName);
 		shooting = false;
+		inSquad = false;
 		orientation = Orientation.SSE;
 		xCurrent = xDestination = x;
 		yCurrent = yDestination = y;
@@ -231,6 +234,10 @@ public abstract class Sprite implements Comparable<Sprite> {
 		if(shooting) shoot();
 		else move();
 	}
+	
+	public void setInSquad(boolean squad) {
+		inSquad = squad;
+	}
 
 	/**
 	 * Displays sprite image.
@@ -238,6 +245,11 @@ public abstract class Sprite implements Comparable<Sprite> {
 	 * @param g
 	 */
 	void draw(Graphics g) {
+		if(inSquad) {
+			g.setColor(Color.YELLOW);
+			g.drawOval(xCurrent, yCurrent + 2*spriteImage.getHeight()/3, 
+					spriteImage.getWidth(), spriteImage.getHeight()/3);
+		}
 		g.drawImage(spriteImage, xCurrent, yCurrent, null);
 	}
 	
@@ -252,5 +264,7 @@ public abstract class Sprite implements Comparable<Sprite> {
 		else result = 0;
 		return result;
 	}
+	
+
 
 }

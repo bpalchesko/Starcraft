@@ -15,6 +15,7 @@ public class Cast {
 	ArrayList<Sprite> spriteList;
 	ArrayList<Sprite> humanSprites;
 	ArrayList<Sprite> humanSquad;
+	int[][] humanSquadBox;
 	Random generator;
 	
 	/**
@@ -23,6 +24,8 @@ public class Cast {
 	public Cast() {
 		spriteList = new ArrayList<Sprite>();
 		humanSprites = new ArrayList<Sprite>();
+		humanSquad = new ArrayList<Sprite>();
+		humanSquadBox = new int[2][2];
 	}
 	
 	/**
@@ -87,6 +90,34 @@ public class Cast {
 //			s.orientation = s.selectOrientation();
 //		}
 //	}
+	
+	public void selectHumanSquad(int clickedX, int clickedY, int draggedX, int draggedY) {
+		if (draggedX > clickedX) {
+			humanSquadBox[0][0] = clickedX;
+			humanSquadBox[1][0] = draggedX;
+		} else {
+			humanSquadBox[0][0] = draggedX;
+			humanSquadBox[1][0] = clickedX;
+		}
+		if (draggedY > clickedY) {
+			humanSquadBox[0][1] = clickedY;
+			humanSquadBox[1][1] = draggedY;
+		} else {
+			humanSquadBox[0][1] = draggedY;
+			humanSquadBox[1][1] = clickedY;
+		}
+		for (Sprite s: humanSquad) {
+			s.setInSquad(false);
+		}
+		humanSquad = new ArrayList<Sprite>();
+		for (Sprite s : humanSprites) {
+			if (s.xCurrent >= humanSquadBox[0][0] && s.xCurrent <= humanSquadBox[1][0] &&
+				s.yCurrent >= humanSquadBox[0][1] && s.yCurrent <= humanSquadBox[1][1]) {
+				humanSquad.add(s);
+				s.setInSquad(true);
+			}
+		}
+	}
 	
 	/**
 	 * Sorts cast for proper drawing.

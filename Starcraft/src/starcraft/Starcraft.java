@@ -3,8 +3,6 @@ package starcraft;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Timer;
@@ -14,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  * Defines Starcraft minigame gameplay.
@@ -31,13 +28,6 @@ public class Starcraft extends JFrame {
 	View view;
 	Timer timer;
 	PlayerMouseControls mouse;
-	final int X = 0;
-	final int Y = 1;
-	int[] clickedCoordinates = {-1, -1};
-//	int[] pressedCoordinates = {-1, -1};
-//	int[] releasedCoordinates = {-1, -1};
-//	boolean mousePressed = false;
-	int[] draggedCoordinates = {-1, -1};
 
 	/**
 	 * Main method for this game application.
@@ -65,40 +55,6 @@ public class Starcraft extends JFrame {
 		view.addMouseListener(mouse);
 		view.addMouseMotionListener(mouse);
 		startGame();
-//		view.addMouseListener(new MouseListener() {
-//
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				for (Sprite s : view.cast.humanSprites) {
-//					if (SwingUtilities.isLeftMouseButton(e)) {
-//						s.xDestination = e.getX() - s.spriteImage.getWidth()/2;
-//						s.yDestination = e.getY() - s.spriteImage.getHeight();
-//						s.shooting = false;
-//					} else if (SwingUtilities.isRightMouseButton(e)) {
-//						s.xDestination = s.xCurrent;
-//						s.yDestination = s.yCurrent;
-//						s.shooting = true;
-//						view.cast.preventSpriteOverlaps(s);
-//					}
-//					view.cast.preventSpriteOverlaps(s);
-//				}
-//			}
-//
-//			@Override
-//			public void mousePressed(MouseEvent e) { 
-//				mousePressed = true;
-//				clickedCoordinates[X] = e.getX();
-//				clickedCoordinates[Y] = e.getY();
-//			}
-//			
-//			public void mouseReleased(MouseEvent e) {
-//				releasedCoordinates[X] = e.getX();
-//				releasedCoordinates[Y] = e.getY();
-//				mousePressed = false;
-//			}
-//			public void mouseEntered(MouseEvent e) {}
-//			public void mouseExited(MouseEvent e) {}
-//		});
 	}
 
 	/**
@@ -188,18 +144,5 @@ public class Starcraft extends JFrame {
 		});
 		bottomBar.add(addMarine, BorderLayout.EAST);
 	}
-
-
-	
-//	public void updatePressedCoordinates(MouseEvent e) {
-//		if (mousePressed) {
-//			pressedCoordinates[X] = e.getX();
-//			pressedCoordinates[Y] = e.getY();
-//		}
-//	}
-//	
-//	public boolean getPressed() {
-//		return mousePressed;
-//	}
 	
 }

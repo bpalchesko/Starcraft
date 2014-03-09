@@ -23,49 +23,63 @@ public class PlayerMouseControls extends MouseInputAdapter {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		for (Sprite s : view.cast.humanSprites) {
-			if (SwingUtilities.isLeftMouseButton(e)) {
-				s.xDestination = e.getX() - s.spriteImage.getWidth()/2;
-				s.yDestination = e.getY() - s.spriteImage.getHeight();
-				s.shooting = false;
-			} else if (SwingUtilities.isRightMouseButton(e)) {
-				s.xDestination = s.xCurrent;
-				s.yDestination = s.yCurrent;
-				s.shooting = true;
+		if (view.cast.humanSquad.size() > 0) {
+			for (Sprite s : view.cast.humanSquad) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					s.xDestination = e.getX() - s.spriteImage.getWidth() / 2;
+					s.yDestination = e.getY() - s.spriteImage.getHeight();
+					s.shooting = false;
+				} 
+//					else if (SwingUtilities.isRightMouseButton(e)) {
+//					s.xDestination = s.xCurrent;
+//					s.yDestination = s.yCurrent;
+//					s.shooting = true;
+//					view.cast.preventSpriteOverlaps(s);
+//				}
 				view.cast.preventSpriteOverlaps(s);
 			}
-			view.cast.preventSpriteOverlaps(s);
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) { 
-		mousePressed = true;
-		selectedCoordinates[CLICKED][X] = e.getX();
-		selectedCoordinates[CLICKED][Y] = e.getY();
-		selectedCoordinates[DRAGGED][X] = e.getX();
-		selectedCoordinates[DRAGGED][Y] = e.getY();
-		view.setSelecting(mousePressed);
-		view.setSelectionBox(selectedCoordinates[CLICKED][X], 
-				selectedCoordinates[CLICKED][Y], 
-				selectedCoordinates[DRAGGED][X], 
-				selectedCoordinates[DRAGGED][Y]);
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			mousePressed = true;
+			selectedCoordinates[CLICKED][X] = e.getX();
+			selectedCoordinates[CLICKED][Y] = e.getY();
+			selectedCoordinates[DRAGGED][X] = e.getX();
+			selectedCoordinates[DRAGGED][Y] = e.getY();
+			view.setSelecting(mousePressed);
+			view.setSelectionBox(selectedCoordinates[CLICKED][X], 
+					selectedCoordinates[CLICKED][Y], 
+					selectedCoordinates[DRAGGED][X], 
+					selectedCoordinates[DRAGGED][Y]);
+		}
 	}
+		
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		mousePressed = false;
-		view.setSelecting(mousePressed);
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			mousePressed = false;
+			view.setSelecting(mousePressed);
+			view.cast.selectHumanSquad(selectedCoordinates[CLICKED][X],
+					selectedCoordinates[CLICKED][Y],
+					selectedCoordinates[DRAGGED][X],
+					selectedCoordinates[DRAGGED][Y]);
+		}
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		selectedCoordinates[DRAGGED][X] = e.getX();
-		selectedCoordinates[DRAGGED][Y] = e.getY();
-		view.setSelectionBox(selectedCoordinates[CLICKED][X], 
-				selectedCoordinates[CLICKED][Y], 
-				selectedCoordinates[DRAGGED][X], 
-				selectedCoordinates[DRAGGED][Y]);
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			selectedCoordinates[DRAGGED][X] = e.getX();
+			selectedCoordinates[DRAGGED][Y] = e.getY();
+			view.setSelectionBox(selectedCoordinates[CLICKED][X],
+					selectedCoordinates[CLICKED][Y],
+					selectedCoordinates[DRAGGED][X],
+					selectedCoordinates[DRAGGED][Y]);
+		}
 	}
 	
 	public boolean getPressed() {
